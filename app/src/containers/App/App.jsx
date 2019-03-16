@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Stocks from '../Stocks'
+import Stocks from 'containers/Stocks'
 
 import './App.scss'
 

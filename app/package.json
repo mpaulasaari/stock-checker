@@ -8,7 +8,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "sass-lint --verbose",
     "lint:js": "eslint src --ext .jsx,.js --max-warnings 0",
-    "start": "webpack-dev-server --config ./config/webpack.config.js --open --mode development",
+    "start": "webpack-dev-server --config ./config/webpack.config.js --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,6 +27,7 @@
     "css-loader": "^2.1.1",
     "eslint": "^5.15.2",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-webpack": "^0.11.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",

@@ -1,8 +1,10 @@
+import * as R from 'ramda'
+
 import {
   fetchStockDetails,
   fetchStockPrice,
   fetchStocksList,
-} from '../../utils/dataFetching'
+} from 'utils/dataFetching'
 
 import {
   CLEAR_SELECTED_STOCK,
@@ -11,7 +13,7 @@ import {
   GET_STOCK_DETAILS_FAIL,
   GET_STOCKS_LIST,
   GET_STOCKS_LIST_SUCCESS,
-} from '../../constants/actionTypes'
+} from 'constants/actionTypes'
 
 const requestStock = symbol => ({
   type: GET_STOCK_DETAILS,
@@ -33,8 +35,9 @@ export const clearSelectedStock = () => ({
   type: CLEAR_SELECTED_STOCK,
 })
 
-const requestStocksList = () => ({
+const requestStocksList = list => ({
   type: GET_STOCKS_LIST,
+  list,
 })
 
 const receiveStocksList = payload => ({
@@ -43,8 +46,15 @@ const receiveStocksList = payload => ({
 })
 
 export const getStockDetails = symbol => (
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(requestStock(symbol))
+
+    const cachedStock = R.find(R.propEq('symbol', symbol))(getState().stocks.list)
+    const cachedStockHasDetails = R.prop('description')(cachedStock)
+
+    if (cachedStockHasDetails) {
+      return dispatch(requestStockSuccess(symbol, cachedStock))
+    }
 
     const stock = await fetchStockDetails(symbol)
 
@@ -74,11 +84,11 @@ export const getStockDetailsAndPrice = symbol => (
   }
 )
 
-export const getStocksList = () => (
+export const getStocksList = list => (
   async (dispatch) => {
-    dispatch(requestStocksList())
+    dispatch(requestStocksList(list))
 
-    const stockList = await fetchStocksList('infocus')
+    const stockList = await fetchStocksList(list)
 
     return dispatch(receiveStocksList(stockList))
   }

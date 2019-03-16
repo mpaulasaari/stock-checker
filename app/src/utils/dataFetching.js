@@ -1,10 +1,10 @@
 import fetch from 'cross-fetch'
 
-import { IEX_TRADING_BASE_URL } from '../constants/api'
+import { IEX_TRADING_BASE_URL } from 'constants/api'
 
 const handleFetchErrors = (response) => {
   if (!response.ok) {
-    console.error(`Error fetching data: ${response.status} ${response.statusText}`)
+    throw Error(response.status)
   }
 
   return response

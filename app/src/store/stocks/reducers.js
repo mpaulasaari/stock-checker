@@ -1,4 +1,7 @@
-import * as R from 'ramda'
+import {
+  getUpdatedList,
+  parseStockData,
+} from 'utils/dataParsing'
 
 import {
   CLEAR_SELECTED_STOCK,
@@ -7,25 +10,12 @@ import {
   GET_STOCK_DETAILS_FAIL,
   GET_STOCKS_LIST,
   GET_STOCKS_LIST_SUCCESS,
-} from '../../constants/actionTypes'
+} from 'constants/actionTypes'
 
 const initialState = {
   isFetching: false,
   list: [],
   selected: '',
-}
-const getUpdatedList = (list, symbol, update) => {
-  const itemIndex = R.findIndex(R.propEq('symbol', symbol))(list)
-
-  if (itemIndex >= 0) {
-    return R.adjust(
-      itemIndex,
-      stock => ({ ...stock, ...update }),
-      list,
-    )
-  }
-
-  return [...list, update]
 }
 
 const stocks = (state = initialState, action) => {
@@ -66,7 +56,7 @@ const stocks = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        list: action.payload,
+        list: action.payload.map(parseStockData),
       }
 
     default:

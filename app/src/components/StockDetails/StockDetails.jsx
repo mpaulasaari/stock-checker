@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import LabelValue from '../LabelValue'
+import LabelValue from 'components/LabelValue'
 
 const StockDetails = (props) => {
   const {

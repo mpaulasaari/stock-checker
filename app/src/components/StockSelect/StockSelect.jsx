@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import CreatableSelect from 'react-select/lib/Creatable'
 
-import { CREATABLE_SELECT_ACTION_TYPES } from '../../constants/reactSelect'
+import { CREATABLE_SELECT_ACTION_TYPES } from 'constants/reactSelect'
 
 class StockSelect extends PureComponent {
   formatCreateLabel = symbol => `Get information for ${symbol.toUpperCase()}`

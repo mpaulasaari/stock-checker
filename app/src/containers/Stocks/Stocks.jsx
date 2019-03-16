@@ -7,10 +7,10 @@ import {
   getStockDetailsAndPrice,
   getStocksList,
   clearSelectedStock,
-} from '../../store/stocks/actions'
+} from 'store/stocks/actions'
 
-import StockDetails from '../../components/StockDetails'
-import StockSelect from '../../components/StockSelect'
+import StockDetails from 'components/StockDetails'
+import StockSelect from 'components/StockSelect'
 
 import './Stocks.scss'
 
@@ -25,7 +25,7 @@ const mapStockList = list => (
 
 class Stocks extends PureComponent {
   componentDidMount() {
-    this.props.getStocksList()
+    this.props.getStocksList('infocus')
   }
 
   handleStockClear = () => this.props.clearSelectedStock('')
@@ -36,7 +36,7 @@ class Stocks extends PureComponent {
     return this.props.getStockDetails(symbol)
   }
 
-  getStockDetails = () => {
+  findStockDetails = () => {
     const { list, selected } = this.props.stocks
 
     return list.find(listItem => listItem.symbol === selected)
@@ -45,7 +45,7 @@ class Stocks extends PureComponent {
   render() {
     const { stocks, stocks: { isFetching, selected } } = this.props
     const stockList = mapStockList(stocks.list)
-    const stockDetails = this.getStockDetails()
+    const stockDetails = this.findStockDetails()
     const stockNotFound = !stockDetails ? selected : ''
 
     return (
@@ -90,7 +90,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getStockDetails: payload => dispatch(getStockDetails(payload)),
   getStockDetailsAndPrice: payload => dispatch(getStockDetailsAndPrice(payload)),
-  getStocksList: () => dispatch(getStocksList()),
+  getStocksList: payload => dispatch(getStocksList(payload)),
   clearSelectedStock: payload => dispatch(clearSelectedStock(payload)),
 })
 

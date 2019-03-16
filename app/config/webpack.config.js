@@ -67,16 +67,26 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
+    alias: {
+      components: path.resolve(__dirname, '../src/components'),
+      constants: path.resolve(__dirname, '../src/constants'),
+      containers: path.resolve(__dirname, '../src/containers'),
+      images: path.resolve(__dirname, '../src/assets/images'),
+      store: path.resolve(__dirname, '../src/store'),
+      styles: path.resolve(__dirname, '../src/assets/styles'),
+      utils: path.resolve(__dirname, '../src/utils'),
+    },
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin(),
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            drop_console: true,
+          },
+        },
+      }),
     ],
-  },
-  output: {
-    filename: '[name].js',
-    path: path.join(__dirname, '../dist'),
-    chunkFilename: '[id].[chunkhash].js',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -87,6 +97,11 @@ module.exports = {
       favicon: 'assets/images/favicon.ico',
     }),
   ],
+  output: {
+    filename: '[name].js',
+    path: path.join(__dirname, '../dist'),
+    chunkFilename: '[id].[chunkhash].js',
+  },
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
     compress: true,
