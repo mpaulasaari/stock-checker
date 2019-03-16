@@ -4,19 +4,24 @@ import classnames from 'classnames'
 
 import './LabelValue.scss'
 
-const LabelValue = (props) => {
+const LabelValue = ({
+  children,
+  isLoading,
+  label,
+}) => {
   const classNames = classnames(
     'LabelValue',
-    { loading: props.isLoading },
+    { loading: isLoading },
   )
 
   return (
     <div className={classNames}>
       <div className="LabelValue-label">
-        {props.label}
+        {label}
       </div>
+
       <div className="LabelValue-value">
-        {props.children}
+        {children}
       </div>
     </div>
   )

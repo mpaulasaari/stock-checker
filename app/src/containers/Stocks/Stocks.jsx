@@ -12,13 +12,11 @@ import {
 import StockDetails from 'components/StockDetails'
 import StockSelect from 'components/StockSelect'
 
-import './Stocks.scss'
-
-const mapStockList = list => (
-  list.map(listItem => (
+const mapStocksList = list => (
+  list.map(({ symbol }) => (
     {
-      label: listItem.symbol,
-      value: listItem.symbol,
+      label: symbol,
+      value: symbol,
     }
   ))
 )
@@ -28,7 +26,7 @@ class Stocks extends PureComponent {
     this.props.getStocksList('infocus')
   }
 
-  handleStockClear = () => this.props.clearSelectedStock('')
+  handleStockClear = () => this.props.clearSelectedStock()
 
   handleStockSelect = (symbol, isNew) => {
     if (isNew) return this.props.getStockDetailsAndPrice(symbol)
@@ -37,16 +35,27 @@ class Stocks extends PureComponent {
   }
 
   findStockDetails = () => {
-    const { list, selected } = this.props.stocks
+    const {
+      stocks: {
+        list,
+        selected,
+      },
+    } = this.props
 
     return list.find(listItem => listItem.symbol === selected)
   }
 
   render() {
-    const { stocks, stocks: { isFetching, selected } } = this.props
-    const stockList = mapStockList(stocks.list)
+    const {
+      stocks: {
+        isFetching,
+        list,
+        selected,
+      },
+    } = this.props
+    const stocksList = mapStocksList(list)
     const stockDetails = this.findStockDetails()
-    const stockNotFound = !stockDetails ? selected : ''
+    const unknownSymbol = !stockDetails ? selected : ''
 
     return (
       <section className="Stocks">
@@ -54,18 +63,16 @@ class Stocks extends PureComponent {
           isLoading={isFetching}
           onClear={this.handleStockClear}
           onSelect={this.handleStockSelect}
-          options={stockList}
+          options={stocksList}
           value={selected}
         />
 
-        <div className="Stocks-details">
-          <StockDetails
-            isLoading={isFetching}
-            notFound={stockNotFound}
-            notSelected={!selected}
-            details={stockDetails}
-          />
-        </div>
+        <StockDetails
+          details={stockDetails}
+          isLoading={isFetching}
+          notSelected={!selected}
+          unknownSymbol={unknownSymbol}
+        />
       </section>
     )
   }

@@ -3,32 +3,34 @@ import PropTypes from 'prop-types'
 
 import LabelValue from 'components/LabelValue'
 
-const StockDetails = (props) => {
-  const {
-    details: {
-      description,
-      latestPrice,
-      symbol,
-    },
-    isLoading,
-    notFound,
-    notSelected,
-  } = props
-
+const StockDetails = ({
+  details: {
+    description,
+    latestPrice,
+    symbol,
+  },
+  isLoading,
+  notSelected,
+  unknownSymbol,
+}) => {
   if (notSelected) {
-    return <div>Select or type a stock symbol to show details</div>
+    return (
+      <LabelValue label="Getting started">
+        Select or type a stock symbol to see the details
+      </LabelValue>
+    )
   }
 
-  if (!isLoading && notFound) {
+  if (!isLoading && unknownSymbol) {
     return (
-      <div>
-        No stock details found for symbol {notFound}
-      </div>
+      <LabelValue label="Sorry!">
+        No stock details found for symbol: {unknownSymbol}
+      </LabelValue>
     )
   }
 
   return (
-    <div className="StockDetails">
+    <>
       <LabelValue
         isLoading={isLoading}
         label="Symbol"
@@ -49,7 +51,7 @@ const StockDetails = (props) => {
       >
         {description}
       </LabelValue>
-    </div>
+    </>
   )
 }
 
@@ -60,15 +62,15 @@ StockDetails.propTypes = {
     symbol: PropTypes.string,
   }),
   isLoading: PropTypes.bool,
-  notFound: PropTypes.string,
   notSelected: PropTypes.bool,
+  unknownSymbol: PropTypes.string,
 }
 
 StockDetails.defaultProps = {
   details: {},
   isLoading: false,
-  notFound: '',
   notSelected: false,
+  unknownSymbol: '',
 }
 
 export default StockDetails

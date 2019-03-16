@@ -3,9 +3,7 @@ import fetch from 'cross-fetch'
 import { IEX_TRADING_BASE_URL } from 'constants/api'
 
 const handleFetchErrors = (response) => {
-  if (!response.ok) {
-    throw Error(response.status)
-  }
+  if (!response.ok) throw Error(response.status)
 
   return response
 }

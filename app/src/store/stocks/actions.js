@@ -5,6 +5,7 @@ import {
   fetchStockPrice,
   fetchStocksList,
 } from 'utils/dataFetching'
+import { parseStockData } from 'utils/dataParsing'
 
 import {
   CLEAR_SELECTED_STOCK,
@@ -49,7 +50,8 @@ export const getStockDetails = symbol => (
   async (dispatch, getState) => {
     dispatch(requestStock(symbol))
 
-    const cachedStock = R.find(R.propEq('symbol', symbol))(getState().stocks.list)
+    const { stocks: { list } } = getState()
+    const cachedStock = R.find(R.propEq('symbol', symbol))(list)
     const cachedStockHasDetails = R.prop('description')(cachedStock)
 
     if (cachedStockHasDetails) {
@@ -66,7 +68,10 @@ export const getStockDetailsAndPrice = symbol => (
   async (dispatch) => {
     dispatch(requestStock(symbol))
 
-    const [stockDetails, stockPrice] = await Promise.all([
+    const [
+      stockDetails,
+      stockPrice,
+    ] = await Promise.all([
       fetchStockDetails(symbol),
       fetchStockPrice(symbol),
     ])
@@ -88,8 +93,9 @@ export const getStocksList = list => (
   async (dispatch) => {
     dispatch(requestStocksList(list))
 
-    const stockList = await fetchStocksList(list)
+    const stocksList = await fetchStocksList(list)
+    const parsedStocksList = stocksList.map(parseStockData)
 
-    return dispatch(receiveStocksList(stockList))
+    return dispatch(receiveStocksList(parsedStocksList))
   }
 )

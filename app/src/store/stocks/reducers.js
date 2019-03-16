@@ -1,7 +1,4 @@
-import {
-  getUpdatedList,
-  parseStockData,
-} from 'utils/dataParsing'
+import { mergeList } from 'utils/dataParsing'
 
 import {
   CLEAR_SELECTED_STOCK,
@@ -31,7 +28,11 @@ const stocks = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        list: getUpdatedList(state.list, action.symbol, action.payload),
+        list: mergeList(
+          state.list,
+          action.symbol,
+          action.payload,
+        ),
       }
 
     case GET_STOCK_DETAILS_FAIL:
@@ -56,7 +57,7 @@ const stocks = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        list: action.payload.map(parseStockData),
+        list: action.payload,
       }
 
     default:

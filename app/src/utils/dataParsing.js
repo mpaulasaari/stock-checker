@@ -18,13 +18,16 @@ export const parseStockData = (stock) => {
   return props
 }
 
-export const getUpdatedList = (list, symbol, update) => {
+export const mergeList = (list, symbol, update) => {
   const itemIndex = R.findIndex(R.propEq('symbol', symbol))(list)
 
   if (itemIndex >= 0) {
     return R.adjust(
       itemIndex,
-      stock => ({ ...stock, ...parseStockData(update) }),
+      stock => ({
+        ...stock,
+        ...parseStockData(update),
+      }),
       list,
     )
   }

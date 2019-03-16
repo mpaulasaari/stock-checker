@@ -1,16 +1,21 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-
 import CreatableSelect from 'react-select/lib/Creatable'
 
 import { CREATABLE_SELECT_ACTION_TYPES } from 'constants/reactSelect'
 
-class StockSelect extends PureComponent {
-  formatCreateLabel = symbol => `Get information for ${symbol.toUpperCase()}`
+const StockSelect = ({
+  isLoading,
+  onClear,
+  onSelect,
+  options,
+  value,
+}) => {
+  const formatCreateLabel = symbol => (
+    `Get details for ${symbol.toUpperCase()}`
+  )
 
-  getValue = () => {
-    const { value } = this.props
-
+  const getValue = () => {
     if (!value) return null
 
     return {
@@ -19,15 +24,14 @@ class StockSelect extends PureComponent {
     }
   }
 
-  handleChange = (selection, actionType) => {
-    const { onClear, onSelect } = this.props
-
+  const handleChange = (selection, actionType) => {
     switch (actionType.action) {
       case CREATABLE_SELECT_ACTION_TYPES.CLEAR:
         return onClear()
 
       case CREATABLE_SELECT_ACTION_TYPES.SELECT_OPTION:
         if (!selection) return false
+
         return onSelect(selection.label)
 
       case CREATABLE_SELECT_ACTION_TYPES.CREATE_OPTION:
@@ -38,19 +42,17 @@ class StockSelect extends PureComponent {
     }
   }
 
-  render() {
-    return (
-      <CreatableSelect
-        formatCreateLabel={this.formatCreateLabel}
-        isClearable
-        isLoading={this.props.isLoading}
-        onChange={this.handleChange}
-        options={this.props.options}
-        placeholder="Select or type..."
-        value={this.getValue()}
-      />
-    )
-  }
+  return (
+    <CreatableSelect
+      formatCreateLabel={formatCreateLabel}
+      isClearable
+      isLoading={isLoading}
+      onChange={handleChange}
+      options={options}
+      placeholder="Select or type..."
+      value={getValue()}
+    />
+  )
 }
 
 StockSelect.propTypes = {
