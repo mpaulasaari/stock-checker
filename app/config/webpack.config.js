@@ -82,8 +82,9 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CompressionPlugin(),
     new HtmlWebPackPlugin({
-      template: '../src/index.html',
+      template: 'index.html',
       filename: 'index.html',
+      favicon: 'assets/images/favicon.ico',
     }),
   ],
   devServer: {

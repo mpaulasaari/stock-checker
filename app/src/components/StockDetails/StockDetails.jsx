@@ -16,7 +16,7 @@ const StockDetails = (props) => {
   } = props
 
   if (notSelected) {
-    return <div>Please select or type a stock symbol to show details</div>
+    return <div>Select or type a stock symbol to show details</div>
   }
 
   if (!isLoading && notFound) {
