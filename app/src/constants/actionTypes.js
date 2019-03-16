@@ -1,0 +1,7 @@
+export const GET_STOCK = 'stocks/GET_STOCK'
+export const GET_STOCK_SUCCESS = 'stocks/GET_STOCK_SUCCESS'
+export const GET_STOCK_FAIL = 'stocks/GET_STOCK_FAIL'
+export const GET_STOCK_LIST = 'stocks/GET_STOCK_LIST'
+export const GET_STOCK_LIST_SUCCESS = 'stocks/GET_STOCK_LIST_SUCCESS'
+export const GET_STOCK_LIST_FAIL = 'stocks/GET_STOCK_LIST_FAIL'
+export const CLEAR_SELECTED_STOCK = 'stocks/CLEAR_SELECTED_STOCK'
