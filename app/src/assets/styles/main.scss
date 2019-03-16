@@ -1,0 +1,19 @@
+// Vendors
+@import './vendor/normalize';
+
+// General
+html {
+  font-size: 100%;
+  word-spacing: 1px;
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}

@@ -3,20 +3,15 @@ import PropTypes from 'prop-types'
 
 import CreatableSelect from 'react-select/lib/Creatable'
 
-// https://react-select.com/props#creatable-props
-const CREATABLE_SELECT_ACTION_TYPES = {
-  SELECT_OPTION: 'select-option',
-  DESELECT_OPTION: 'deselect-option',
-  REMOVE_VALUE: 'remove-value',
-  POP_VALUE: 'pop-value',
-  SET_VALUE: 'set-value',
-  CLEAR: 'clear',
-  CREATE_OPTION: 'create-option',
-}
+import { CREATABLE_SELECT_ACTION_TYPES } from '../../constants/reactSelect'
 
 class StockSelect extends PureComponent {
+  formatCreateLabel = symbol => `Get information for ${symbol.toUpperCase()}`
+
   getValue = () => {
     const { value } = this.props
+
+    if (!value) return null
 
     return {
       label: value,
@@ -46,9 +41,12 @@ class StockSelect extends PureComponent {
   render() {
     return (
       <CreatableSelect
+        formatCreateLabel={this.formatCreateLabel}
         isClearable
+        isLoading={this.props.isLoading}
         onChange={this.handleChange}
         options={this.props.options}
+        placeholder="Select or type..."
         value={this.getValue()}
       />
     )
@@ -56,6 +54,7 @@ class StockSelect extends PureComponent {
 }
 
 StockSelect.propTypes = {
+  isLoading: PropTypes.bool,
   onClear: PropTypes.func,
   onSelect: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.shape({})),
@@ -63,6 +62,7 @@ StockSelect.propTypes = {
 }
 
 StockSelect.defaultProps = {
+  isLoading: false,
   onClear: () => null,
   onSelect: () => null,
   options: [],

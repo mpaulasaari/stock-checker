@@ -1,0 +1,33 @@
+.LabelValue {
+  margin-top: 32px;
+
+  &-label,
+  &-value {
+
+    .loading & {
+      display: flex;
+      color: rgba(0, 0, 0, 0);
+
+      &:before {
+        display: block;
+        width: 80px;
+        height: 18px;
+        margin: 2px 0;
+        background: rgba(0, 0, 0, 0.1);
+        content: '';
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &-label {
+    font-weight: bold;
+  }
+
+  &-value {
+
+    .loading &:before {
+      width: 120px;
+    }
+  }
+}

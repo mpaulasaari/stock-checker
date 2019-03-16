@@ -7,7 +7,10 @@ options:
 
 files:
   include:
-    - 'src/*.s+(a|c)ss'
+    - '**/*.s+(a|c)ss'
+  ignore:
+    - 'node_modules/**/*'
+    - 'src/assets/styles/vendor/**/*'
 
 rules:
   # Reports when you use improper spacing around ! (the "bang") in !important and !default declarations.

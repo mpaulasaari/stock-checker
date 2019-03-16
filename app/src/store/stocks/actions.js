@@ -1,72 +1,72 @@
 import {
-  fetchStockInfo,
+  fetchStockDetails,
   fetchStockPrice,
   fetchStocksList,
 } from '../../utils/dataFetching'
 
 import {
   CLEAR_SELECTED_STOCK,
-  GET_STOCK,
-  GET_STOCK_SUCCESS,
-  GET_STOCK_FAIL,
-  GET_STOCK_LIST,
-  GET_STOCK_LIST_SUCCESS,
+  GET_STOCK_DETAILS,
+  GET_STOCK_DETAILS_SUCCESS,
+  GET_STOCK_DETAILS_FAIL,
+  GET_STOCKS_LIST,
+  GET_STOCKS_LIST_SUCCESS,
 } from '../../constants/actionTypes'
 
 const requestStock = symbol => ({
-  type: GET_STOCK,
+  type: GET_STOCK_DETAILS,
   symbol,
 })
 
 const requestStockSuccess = (symbol, payload) => ({
-  type: GET_STOCK_SUCCESS,
+  type: GET_STOCK_DETAILS_SUCCESS,
   symbol,
   payload,
 })
 
 const requestStockFail = symbol => ({
-  type: GET_STOCK_FAIL,
+  type: GET_STOCK_DETAILS_FAIL,
   symbol,
-})
-
-const requestStockList = () => ({
-  type: GET_STOCK_LIST,
-})
-
-const receiveStockList = payload => ({
-  type: GET_STOCK_LIST_SUCCESS,
-  payload,
 })
 
 export const clearSelectedStock = () => ({
   type: CLEAR_SELECTED_STOCK,
 })
 
-export const getStockInfo = symbol => (
+const requestStocksList = () => ({
+  type: GET_STOCKS_LIST,
+})
+
+const receiveStocksList = payload => ({
+  type: GET_STOCKS_LIST_SUCCESS,
+  payload,
+})
+
+export const getStockDetails = symbol => (
   async (dispatch) => {
     dispatch(requestStock(symbol))
 
-    const stock = await fetchStockInfo(symbol)
+    const stock = await fetchStockDetails(symbol)
 
     return dispatch(requestStockSuccess(symbol, stock))
   }
 )
 
-export const getStockInfoAndPrice = symbol => (
+export const getStockDetailsAndPrice = symbol => (
   async (dispatch) => {
     dispatch(requestStock(symbol))
 
-    const [stockInfo, stockPrice] = await Promise.all([
-      fetchStockInfo(symbol),
+    const [stockDetails, stockPrice] = await Promise.all([
+      fetchStockDetails(symbol),
       fetchStockPrice(symbol),
     ])
 
-    if (!stockInfo || !stockPrice) {
+    if (!stockDetails || !stockPrice) {
       return dispatch(requestStockFail(symbol))
     }
 
     const stock = {
-      ...stockInfo,
+      ...stockDetails,
       latestPrice: stockPrice,
     }
 
@@ -76,10 +76,10 @@ export const getStockInfoAndPrice = symbol => (
 
 export const getStocksList = () => (
   async (dispatch) => {
-    dispatch(requestStockList())
+    dispatch(requestStocksList())
 
     const stockList = await fetchStocksList('infocus')
 
-    return dispatch(receiveStockList(stockList))
+    return dispatch(receiveStocksList(stockList))
   }
 )

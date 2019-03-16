@@ -10,7 +10,7 @@ const handleFetchErrors = (response) => {
   return response
 }
 
-export const fetchStockInfo = symbol => (
+export const fetchStockDetails = symbol => (
   fetch(`${IEX_TRADING_BASE_URL}/stock/${symbol}/company`)
     .then(handleFetchErrors)
     .then(response => response.json())
