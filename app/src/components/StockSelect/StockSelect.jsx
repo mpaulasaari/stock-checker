@@ -15,21 +15,24 @@ const StockSelect = ({
 }) => {
   const handleChange = (selection, { action }) => {
     switch (action) {
+      // Selection was cleared
       case CREATABLE_SELECT_ACTION_TYPES.CLEAR:
         return onClear()
 
+      // Item was selected from the list
       case CREATABLE_SELECT_ACTION_TYPES.SELECT_OPTION:
-        if (!selection) return false
+        if (!selection) return false // Prevent action without selection
         return onSelect(selection.label)
 
+      // New item was created
       case CREATABLE_SELECT_ACTION_TYPES.CREATE_OPTION:
         return onSelect(selection.label.toUpperCase(), true)
 
+      // Something else happened, no action
       default:
         return false
     }
   }
-
   const formatCreateLabel = symbol => `Get details for ${symbol.toUpperCase()}`
   const noOptionsMessage = () => 'No stocks found'
   const formattedValue = formatSelectItems(value)

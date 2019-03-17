@@ -14,10 +14,11 @@ import { formatListForSelect } from 'utils/dataParsing'
 import StockDetails from 'components/StockDetails'
 import StockSelect from 'components/StockSelect'
 
+// Name of the list to be used https://iextrading.com/developer/docs/#list
 const STOCKS_LIST = 'infocus'
 
 class Stocks extends PureComponent {
-  componentDidMount() {
+  componentWillMount() {
     this.props.getStocksList(STOCKS_LIST)
   }
 
@@ -33,8 +34,11 @@ class Stocks extends PureComponent {
         selected,
       },
     } = this.props
+    // Formatted stock list from store
     const stocksList = formatListForSelect(list)
+    // Get details for selected symbol from store
     const stockDetails = R.find(R.propEq('symbol', selected))(list)
+    // Symbol was entered but no details received from server
     const unknownSymbol = !stockDetails ? selected : ''
 
     return (

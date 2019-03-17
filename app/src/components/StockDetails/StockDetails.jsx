@@ -15,6 +15,8 @@ const StockDetails = ({
   unknownSymbol,
 }) => {
   if (!isLoading) {
+    // List is empty, most likely a server error or typoed list name in code.
+    // This should not happen very likely
     if (emptyList) {
       return (
         <LabelValue label="Sorry">
@@ -23,6 +25,7 @@ const StockDetails = ({
       )
     }
 
+    // Unknown stock symbol was entered
     if (unknownSymbol) {
       return (
         <LabelValue label="Sorry">
@@ -31,6 +34,7 @@ const StockDetails = ({
       )
     }
 
+    // Nothing is selected, this is the initial state
     if (notSelected) {
       return (
         <LabelValue label="Getting started">
