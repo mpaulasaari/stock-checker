@@ -11,10 +11,10 @@ import {
 } from 'utils/dataParsing'
 
 import {
-  CLEAR_SELECTED_STOCK,
   GET_STOCK_DETAILS,
   GET_STOCK_DETAILS_SUCCESS,
   GET_STOCK_DETAILS_FAIL,
+  CLEAR_SELECTED_STOCK,
   GET_STOCKS_LIST,
   GET_STOCKS_LIST_SUCCESS,
   GET_STOCKS_LIST_FAIL,
@@ -68,9 +68,9 @@ export const getStockDetails = symbol => (
 
     const { stocks: { list } } = getState()
     const promises = []
+    const now = new Date().valueOf()
     const cachedStock = R.find(R.propEq('symbol', symbol))(list)
     const cachedStockHasDetails = R.prop('description')(cachedStock)
-    const now = new Date().valueOf()
 
     if (cachedStockHasDetails) {
       promises.push(() => Promise.resolve(cachedStock))
