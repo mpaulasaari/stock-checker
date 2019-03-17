@@ -20,18 +20,18 @@ import {
   GET_STOCKS_LIST_FAIL,
 } from 'constants/actionTypes'
 
-const requestStock = symbol => ({
+export const requestStock = symbol => ({
   type: GET_STOCK_DETAILS,
   symbol,
 })
 
-const requestStockSuccess = (symbol, payload) => ({
+export const requestStockSuccess = (symbol, payload) => ({
   type: GET_STOCK_DETAILS_SUCCESS,
   symbol,
   payload,
 })
 
-const requestStockFail = symbol => ({
+export const requestStockFail = symbol => ({
   type: GET_STOCK_DETAILS_FAIL,
   symbol,
 })
@@ -40,17 +40,17 @@ export const clearSelectedStock = () => ({
   type: CLEAR_SELECTED_STOCK,
 })
 
-const requestStocksList = list => ({
+export const requestStocksList = list => ({
   type: GET_STOCKS_LIST,
   list,
 })
 
-const requestStocksListSuccess = payload => ({
+export const requestStocksListSuccess = payload => ({
   type: GET_STOCKS_LIST_SUCCESS,
   payload,
 })
 
-const requestStocksListFail = payload => ({
+export const requestStocksListFail = payload => ({
   type: GET_STOCKS_LIST_FAIL,
   payload,
 })
@@ -105,7 +105,6 @@ export const getStockDetails = symbol => (
     ] = await Promise.all(
       promises.map(promise => promise()),
     )
-
     // No stock found = symbol does not exist
     if (!stock) {
       return dispatch(requestStockFail(symbol))
@@ -134,7 +133,7 @@ export const getStocksList = list => (
     const stocksList = await fetchStocksList(list)
 
     // No stock list found = wrong list name or something failed server side
-    if (!stocksList.length) {
+    if (!stocksList || !stocksList.length) {
       return dispatch(requestStocksListFail(list))
     }
 
