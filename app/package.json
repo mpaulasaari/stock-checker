@@ -9,7 +9,8 @@
     "lint:css": "sass-lint --verbose",
     "lint:js": "eslint src --ext .jsx,.js --max-warnings 0",
     "start": "webpack-dev-server --config ./webpack/webpack.config.js --open --mode development",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "license": "NONE",
