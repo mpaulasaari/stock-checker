@@ -46,7 +46,7 @@ $ npm test
 - Build the application into a deployable package to `dist/` directory
 
 ```bash
-$ npm build
+$ npm run build
 ```
 
 ## Authors
