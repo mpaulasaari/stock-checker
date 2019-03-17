@@ -15,7 +15,6 @@ import {
 
 import stocksReducer from './reducers'
 
-
 describe('stocks reducers', () => {
   it(`${GET_STOCK_DETAILS} should return proper results`, () => {
     const symbol = 'foo'

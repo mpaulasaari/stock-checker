@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 import LabelValue from 'components/LabelValue'
 
+export const emptyListText = 'We are having trouble getting stocks info'
+export const unknownSymbolText = 'No stock details found for symbol'
+export const notSelectedText = 'Select or type a stock symbol to see the details'
+
 const StockDetails = ({
   details: {
     description,
@@ -20,7 +24,7 @@ const StockDetails = ({
     if (emptyList) {
       return (
         <LabelValue label="Sorry">
-          We are having trouble getting stocks info
+          {emptyListText}
         </LabelValue>
       )
     }
@@ -29,7 +33,7 @@ const StockDetails = ({
     if (unknownSymbol) {
       return (
         <LabelValue label="Sorry">
-          No stock details found for symbol: {unknownSymbol}
+          {unknownSymbolText}: {unknownSymbol}
         </LabelValue>
       )
     }
@@ -38,7 +42,7 @@ const StockDetails = ({
     if (notSelected) {
       return (
         <LabelValue label="Getting started">
-          Select or type a stock symbol to see the details
+          {notSelectedText}
         </LabelValue>
       )
     }
