@@ -32,7 +32,7 @@ const stocks = (state = initialState, action) => {
         list: mergeList(
           state.list,
           action.symbol,
-          action.payload,
+          action.details,
         ),
       }
 
@@ -58,7 +58,7 @@ const stocks = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        list: action.payload,
+        list: action.list,
       }
 
     case GET_STOCKS_LIST_FAIL:

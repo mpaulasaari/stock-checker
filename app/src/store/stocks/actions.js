@@ -25,10 +25,10 @@ export const requestStock = symbol => ({
   symbol,
 })
 
-export const requestStockSuccess = (symbol, payload) => ({
+export const requestStockSuccess = (symbol, details) => ({
   type: GET_STOCK_DETAILS_SUCCESS,
   symbol,
-  payload,
+  details,
 })
 
 export const requestStockFail = symbol => ({
@@ -45,14 +45,14 @@ export const requestStocksList = list => ({
   list,
 })
 
-export const requestStocksListSuccess = payload => ({
+export const requestStocksListSuccess = list => ({
   type: GET_STOCKS_LIST_SUCCESS,
-  payload,
+  list,
 })
 
-export const requestStocksListFail = payload => ({
+export const requestStocksListFail = list => ({
   type: GET_STOCKS_LIST_FAIL,
-  payload,
+  list,
 })
 
 /**
