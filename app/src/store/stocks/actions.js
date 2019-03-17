@@ -5,7 +5,10 @@ import {
   fetchStockPrice,
   fetchStocksList,
 } from 'utils/dataFetching'
-import { parseStockData } from 'utils/dataParsing'
+import {
+  addPriceUpdated,
+  parseStockData,
+} from 'utils/dataParsing'
 
 import {
   CLEAR_SELECTED_STOCK,
@@ -52,43 +55,47 @@ const requestStocksListFail = payload => ({
   payload,
 })
 
+const shouldFetchStockPrice = (cachedStock, now) => {
+  const CACHE_TIME = 5 * 60 * 1000
+  const cacheExpired = R.prop('priceUpdated', cachedStock) < (now - CACHE_TIME)
+
+  return (!cachedStock || cacheExpired)
+}
+
 export const getStockDetails = symbol => (
   async (dispatch, getState) => {
     dispatch(requestStock(symbol))
 
     const { stocks: { list } } = getState()
+    const promises = []
     const cachedStock = R.find(R.propEq('symbol', symbol))(list)
     const cachedStockHasDetails = R.prop('description')(cachedStock)
+    const now = new Date().valueOf()
 
     if (cachedStockHasDetails) {
-      return dispatch(requestStockSuccess(symbol, cachedStock))
+      promises.push(() => Promise.resolve(cachedStock))
+    } else {
+      promises.push(() => fetchStockDetails(symbol))
     }
 
-    const stock = await fetchStockDetails(symbol)
-
-    return dispatch(requestStockSuccess(symbol, stock))
-  }
-)
-
-export const getStockDetailsAndPrice = symbol => (
-  async (dispatch) => {
-    dispatch(requestStock(symbol))
+    if (shouldFetchStockPrice(cachedStock, now)) {
+      promises.push(() => fetchStockPrice(symbol))
+    }
 
     const [
-      stockDetails,
+      stock,
       stockPrice,
-    ] = await Promise.all([
-      fetchStockDetails(symbol),
-      fetchStockPrice(symbol),
-    ])
+    ] = await Promise.all(
+      promises.map(promise => promise()),
+    )
 
-    if (!stockDetails || !stockPrice) {
+    if (!stock) {
       return dispatch(requestStockFail(symbol))
     }
 
-    const stock = {
-      ...stockDetails,
-      latestPrice: stockPrice,
+    if (stockPrice) {
+      stock.latestPrice = stockPrice
+      stock.priceUpdated = now
     }
 
     return dispatch(requestStockSuccess(symbol, stock))
@@ -105,7 +112,9 @@ export const getStocksList = list => (
       return dispatch(requestStocksListFail(list))
     }
 
-    const parsedStocksList = stocksList.map(parseStockData)
+    const parsedStocksList = stocksList
+      .map(parseStockData)
+      .map(addPriceUpdated)
 
     return dispatch(requestStocksListSuccess(parsedStocksList))
   }

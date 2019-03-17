@@ -3,20 +3,17 @@ import * as R from 'ramda'
 const STOCK_KEYS = [
   'description',
   'latestPrice',
+  'priceUpdated',
   'symbol',
 ]
 
-export const parseStockData = (stock = {}) => {
-  const props = {}
+export const parseStockData = (stock = {}) => (
+  R.pick(STOCK_KEYS, stock)
+)
 
-  Object.keys(stock).forEach((key) => {
-    if (STOCK_KEYS.includes(key)) {
-      props[key] = stock[key]
-    }
-  })
-
-  return props
-}
+export const addPriceUpdated = (stock = {}) => (
+  R.assoc('priceUpdated', new Date().valueOf(), stock)
+)
 
 export const mergeList = (list = [], symbol = '', update = {}) => {
   const itemIndex = R.findIndex(R.propEq('symbol', symbol))(list)

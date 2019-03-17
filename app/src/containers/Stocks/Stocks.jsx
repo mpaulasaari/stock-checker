@@ -5,7 +5,6 @@ import * as R from 'ramda'
 
 import {
   getStockDetails,
-  getStockDetailsAndPrice,
   getStocksList,
   clearSelectedStock,
 } from 'store/stocks/actions'
@@ -24,11 +23,7 @@ class Stocks extends PureComponent {
 
   handleStockClear = () => this.props.clearSelectedStock()
 
-  handleStockSelect = (symbol, isNew) => {
-    if (isNew) return this.props.getStockDetailsAndPrice(symbol)
-
-    return this.props.getStockDetails(symbol)
-  }
+  handleStockSelect = symbol => this.props.getStockDetails(symbol)
 
   render() {
     const {
@@ -66,7 +61,6 @@ class Stocks extends PureComponent {
 
 Stocks.propTypes = {
   getStockDetails: PropTypes.func.isRequired,
-  getStockDetailsAndPrice: PropTypes.func.isRequired,
   getStocksList: PropTypes.func.isRequired,
   stocks: PropTypes.shape({
     isFetching: PropTypes.bool,
@@ -82,7 +76,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getStockDetails: payload => dispatch(getStockDetails(payload)),
-  getStockDetailsAndPrice: payload => dispatch(getStockDetailsAndPrice(payload)),
   getStocksList: payload => dispatch(getStocksList(payload)),
   clearSelectedStock: payload => dispatch(clearSelectedStock(payload)),
 })
