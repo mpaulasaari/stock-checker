@@ -4,5 +4,8 @@ node_modules
 # Build directory
 app/dist
 
+# Test reports
+coverage
+
 # OS X files
 .DS_Store

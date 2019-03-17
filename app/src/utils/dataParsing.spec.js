@@ -23,6 +23,9 @@ describe('data parsing', () => {
     expect(hasExtras).toEqual(
       expect.not.objectContaining(extras),
     )
+
+    const hasNoData = parseStockData()
+    expect(hasNoData).toEqual({})
   })
 
   it('addPriceUpdated should add proper data', () => {
@@ -30,6 +33,9 @@ describe('data parsing', () => {
 
     const hasPriceUpdated = addPriceUpdated(stock)
     expect(hasPriceUpdated).toHaveProperty('priceUpdated')
+
+    const hasNoData = addPriceUpdated()
+    expect(hasNoData).toEqual({ priceUpdated: expect.any(Number) })
   })
 
   it('mergeList should return proper array', () => {
@@ -67,7 +73,10 @@ describe('data parsing', () => {
     const hasValidList = formatListForSelect(list)
     expect(hasValidList).toEqual([{ label: name, value: name }])
 
-    const hasNoList = formatListForSelect([])
-    expect(hasNoList).toEqual([])
+    const hasEmptyList = formatListForSelect([])
+    expect(hasEmptyList).toEqual([])
+
+    const hasNoData = formatListForSelect()
+    expect(hasNoData).toEqual([])
   })
 })

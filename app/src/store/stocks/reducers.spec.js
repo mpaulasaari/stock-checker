@@ -117,4 +117,14 @@ describe('stocks reducers', () => {
     const state = stocksReducer({}, action)
     expect(state).toEqual(endState)
   })
+
+  it('default should return proper results', () => {
+    const action = {
+      type: '',
+    }
+    const endState = {}
+
+    const state = stocksReducer({}, action)
+    expect(state).toEqual(endState)
+  })
 })
