@@ -25,6 +25,8 @@ $ git clone git@github.com:mpaulasaari/stock-checker.git
 $ npm install
 ```
 
+### Starting development mode
+
 - Start the application and it will automatically open in your browser at
 http://localhost:3000
 
@@ -32,6 +34,20 @@ http://localhost:3000
 $ npm start
 ```
 
+### Running tests
+
+
+```bash
+$ npm test
+```
+
+### Building the application
+
+- Build the application into a deployable package to `dist/` directory
+
+```bash
+$ npm build
+```
 
 ## Authors
 
