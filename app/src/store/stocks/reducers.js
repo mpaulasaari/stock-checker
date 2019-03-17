@@ -7,6 +7,7 @@ import {
   GET_STOCK_DETAILS_FAIL,
   GET_STOCKS_LIST,
   GET_STOCKS_LIST_SUCCESS,
+  GET_STOCKS_LIST_FAIL,
 } from 'constants/actionTypes'
 
 const initialState = {
@@ -58,6 +59,12 @@ const stocks = (state = initialState, action) => {
         ...state,
         isFetching: false,
         list: action.payload,
+      }
+
+    case GET_STOCKS_LIST_FAIL:
+      return {
+        ...state,
+        isFetching: false,
       }
 
     default:

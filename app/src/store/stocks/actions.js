@@ -14,6 +14,7 @@ import {
   GET_STOCK_DETAILS_FAIL,
   GET_STOCKS_LIST,
   GET_STOCKS_LIST_SUCCESS,
+  GET_STOCKS_LIST_FAIL,
 } from 'constants/actionTypes'
 
 const requestStock = symbol => ({
@@ -41,8 +42,13 @@ const requestStocksList = list => ({
   list,
 })
 
-const receiveStocksList = payload => ({
+const requestStocksListSuccess = payload => ({
   type: GET_STOCKS_LIST_SUCCESS,
+  payload,
+})
+
+const requestStocksListFail = payload => ({
+  type: GET_STOCKS_LIST_FAIL,
   payload,
 })
 
@@ -94,8 +100,13 @@ export const getStocksList = list => (
     dispatch(requestStocksList(list))
 
     const stocksList = await fetchStocksList(list)
+
+    if (!stocksList.length) {
+      return dispatch(requestStocksListFail(list))
+    }
+
     const parsedStocksList = stocksList.map(parseStockData)
 
-    return dispatch(receiveStocksList(parsedStocksList))
+    return dispatch(requestStocksListSuccess(parsedStocksList))
   }
 )

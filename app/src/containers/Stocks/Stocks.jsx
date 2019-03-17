@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import * as R from 'ramda'
 
 import {
   getStockDetails,
@@ -9,21 +10,16 @@ import {
   clearSelectedStock,
 } from 'store/stocks/actions'
 
+import { formatListForSelect } from 'utils/dataParsing'
+
 import StockDetails from 'components/StockDetails'
 import StockSelect from 'components/StockSelect'
 
-const mapStocksList = list => (
-  list.map(({ symbol }) => (
-    {
-      label: symbol,
-      value: symbol,
-    }
-  ))
-)
+const STOCKS_LIST = 'infocus'
 
 class Stocks extends PureComponent {
   componentDidMount() {
-    this.props.getStocksList('infocus')
+    this.props.getStocksList(STOCKS_LIST)
   }
 
   handleStockClear = () => this.props.clearSelectedStock()
@@ -34,17 +30,6 @@ class Stocks extends PureComponent {
     return this.props.getStockDetails(symbol)
   }
 
-  findStockDetails = () => {
-    const {
-      stocks: {
-        list,
-        selected,
-      },
-    } = this.props
-
-    return list.find(listItem => listItem.symbol === selected)
-  }
-
   render() {
     const {
       stocks: {
@@ -53,8 +38,8 @@ class Stocks extends PureComponent {
         selected,
       },
     } = this.props
-    const stocksList = mapStocksList(list)
-    const stockDetails = this.findStockDetails()
+    const stocksList = formatListForSelect(list)
+    const stockDetails = R.find(R.propEq('symbol', selected))(list)
     const unknownSymbol = !stockDetails ? selected : ''
 
     return (
@@ -69,6 +54,7 @@ class Stocks extends PureComponent {
 
         <StockDetails
           details={stockDetails}
+          emptyList={!stocksList.length}
           isLoading={isFetching}
           notSelected={!selected}
           unknownSymbol={unknownSymbol}

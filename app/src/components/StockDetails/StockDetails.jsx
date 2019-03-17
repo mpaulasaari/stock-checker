@@ -9,24 +9,35 @@ const StockDetails = ({
     latestPrice,
     symbol,
   },
+  emptyList,
   isLoading,
   notSelected,
   unknownSymbol,
 }) => {
-  if (notSelected) {
-    return (
-      <LabelValue label="Getting started">
-        Select or type a stock symbol to see the details
-      </LabelValue>
-    )
-  }
+  if (!isLoading) {
+    if (emptyList) {
+      return (
+        <LabelValue label="Sorry">
+          We are having trouble getting stocks info
+        </LabelValue>
+      )
+    }
 
-  if (!isLoading && unknownSymbol) {
-    return (
-      <LabelValue label="Sorry!">
-        No stock details found for symbol: {unknownSymbol}
-      </LabelValue>
-    )
+    if (unknownSymbol) {
+      return (
+        <LabelValue label="Sorry">
+          No stock details found for symbol: {unknownSymbol}
+        </LabelValue>
+      )
+    }
+
+    if (notSelected) {
+      return (
+        <LabelValue label="Getting started">
+          Select or type a stock symbol to see the details
+        </LabelValue>
+      )
+    }
   }
 
   return (
@@ -61,6 +72,7 @@ StockDetails.propTypes = {
     latestPrice: PropTypes.number,
     symbol: PropTypes.string,
   }),
+  emptyList: PropTypes.bool,
   isLoading: PropTypes.bool,
   notSelected: PropTypes.bool,
   unknownSymbol: PropTypes.string,
@@ -68,6 +80,7 @@ StockDetails.propTypes = {
 
 StockDetails.defaultProps = {
   details: {},
+  emptyList: false,
   isLoading: false,
   notSelected: false,
   unknownSymbol: '',

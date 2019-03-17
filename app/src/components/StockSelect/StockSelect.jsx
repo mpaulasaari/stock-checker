@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CreatableSelect from 'react-select/lib/Creatable'
 
+import { formatSelectItems } from 'utils/dataParsing'
+
 import { CREATABLE_SELECT_ACTION_TYPES } from 'constants/reactSelect'
 
 const StockSelect = ({
@@ -11,27 +13,13 @@ const StockSelect = ({
   options,
   value,
 }) => {
-  const formatCreateLabel = symbol => (
-    `Get details for ${symbol.toUpperCase()}`
-  )
-
-  const getValue = () => {
-    if (!value) return null
-
-    return {
-      label: value,
-      value,
-    }
-  }
-
-  const handleChange = (selection, actionType) => {
-    switch (actionType.action) {
+  const handleChange = (selection, { action }) => {
+    switch (action) {
       case CREATABLE_SELECT_ACTION_TYPES.CLEAR:
         return onClear()
 
       case CREATABLE_SELECT_ACTION_TYPES.SELECT_OPTION:
         if (!selection) return false
-
         return onSelect(selection.label)
 
       case CREATABLE_SELECT_ACTION_TYPES.CREATE_OPTION:
@@ -42,15 +30,21 @@ const StockSelect = ({
     }
   }
 
+  const formatCreateLabel = symbol => `Get details for ${symbol.toUpperCase()}`
+  const noOptionsMessage = () => 'No stocks found'
+  const formattedValue = formatSelectItems(value)
+  const placeholder = 'Select or type...'
+
   return (
     <CreatableSelect
       formatCreateLabel={formatCreateLabel}
       isClearable
       isLoading={isLoading}
+      noOptionsMessage={noOptionsMessage}
       onChange={handleChange}
       options={options}
-      placeholder="Select or type..."
-      value={getValue()}
+      placeholder={placeholder}
+      value={formattedValue}
     />
   )
 }
