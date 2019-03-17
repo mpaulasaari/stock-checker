@@ -13,8 +13,10 @@
         width: 80px;
         height: 18px;
         margin: 2px 0;
-        background: rgba(0, 0, 0, 0.1);
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+        background-size: 300% 100%;
         content: '';
+        animation: loadingGradient 3s linear infinite;
         flex-shrink: 0;
       }
     }
@@ -29,5 +31,15 @@
     .loading &:before {
       width: 120px;
     }
+  }
+}
+
+@keyframes loadingGradient {
+  0% {
+    background-position: 150% 0%;
+  }
+
+  100% {
+    background-position: -150% 0%;
   }
 }
