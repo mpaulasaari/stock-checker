@@ -34,6 +34,14 @@ http://localhost:3000
 $ npm start
 ```
 
+### Building the application
+
+- Build the application into a deployable package to `dist/` directory
+
+```bash
+$ npm run build
+```
+
 ### Running tests
 
 
@@ -41,12 +49,17 @@ $ npm start
 $ npm test
 ```
 
-### Building the application
-
-- Build the application into a deployable package to `dist/` directory
+- Create code coverage for the tests
 
 ```bash
-$ npm run build
+$ npm test:coverage
+```
+
+### Create JSDoc documentation
+
+
+```bash
+$ npm run docs
 ```
 
 ## Authors
