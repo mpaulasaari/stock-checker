@@ -8,7 +8,7 @@ import { IEX_TRADING_BASE_URL } from 'constants/api'
  * @param  {Object}          [response={}] raw response returned from server
  * @return {Object} returns the response if status is ok
  */
-const handleFetchErrors = (response = {}) => {
+export const handleFetchErrors = (response = {}) => {
   if (!response.ok) throw Error(response.status)
 
   return response
