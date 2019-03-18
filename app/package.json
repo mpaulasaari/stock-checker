@@ -11,7 +11,8 @@
     "start": "webpack-dev-server --config ./webpack/webpack.config.js --open --mode development",
     "pretest": "npm run lint",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "docs": "jsdoc src/**/*"
   },
   "keywords": [],
   "license": "NONE",

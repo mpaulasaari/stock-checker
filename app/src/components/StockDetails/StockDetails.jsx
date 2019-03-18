@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import LabelValue from 'components/LabelValue'
@@ -49,7 +49,7 @@ const StockDetails = ({
   }
 
   return (
-    <>
+    <Fragment>
       <LabelValue
         isLoading={isLoading}
         label="Symbol"
@@ -70,7 +70,7 @@ const StockDetails = ({
       >
         {description}
       </LabelValue>
-    </>
+    </Fragment>
   )
 }
 
