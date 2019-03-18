@@ -13,7 +13,7 @@ can download it at https://nodejs.org/en/.
 
 ### Installation
 
-- Clone the code repository or download the zip
+- Clone the code repository or download the [zip](https://github.com/mpaulasaari/stock-checker/archive/master.zip)
 
 ```bash
 $ git clone git@github.com:mpaulasaari/stock-checker.git
