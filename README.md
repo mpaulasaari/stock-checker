@@ -13,13 +13,13 @@ can download it at https://nodejs.org/en/.
 
 ### Installation
 
-- Clone the code repository
+- Clone the code repository or download the zip
 
 ```bash
 $ git clone git@github.com:mpaulasaari/stock-checker.git
 ```
 
-- Navigate to the cloned directory and install the dependencies
+- Navigate in the cloned directory to `app/` and install the dependencies
 
 ```bash
 $ npm install
