@@ -3,13 +3,13 @@ import fetch from 'cross-fetch'
 import { IEX_TRADING_BASE_URL } from 'constants/api'
 
 /**
- * Simple error handler for throwing fetching errors
+ * Simple error handler for fetching errors
  * @method handleFetchErrors
  * @param  {Object}          [response={}] raw response returned from server
  * @return {Object} returns the response if status is ok
  */
 export const handleFetchErrors = (response = {}) => {
-  if (!response.ok) throw Error(response.status)
+  if (!response.ok) throw Error(`${response.status} for URL: ${response.url}`)
 
   return response
 }
