@@ -16,6 +16,13 @@ const initialState = {
   selected: '',
 }
 
+/**
+ * [stocks description]
+ * @method stocks
+ * @param  {Object} [state=initialState] current state
+ * @param  {Object} action the action that was dispatched
+ * @return {Object} new state with updates
+ */
 const stocks = (state = initialState, action) => {
   switch (action.type) {
     case GET_STOCK_DETAILS:

@@ -19,6 +19,7 @@ const STOCKS_LIST = 'infocus'
 
 class Stocks extends PureComponent {
   componentWillMount() {
+    // fetch the stock list on mount
     this.props.getStocksList(STOCKS_LIST)
   }
 

@@ -5,8 +5,8 @@ import { IEX_TRADING_BASE_URL } from 'constants/api'
 /**
  * Simple error handler for throwing fetching errors
  * @method handleFetchErrors
- * @param  {Object}          [response={}]
- * @return {Object}
+ * @param  {Object}          [response={}] raw response returned from server
+ * @return {Object} returns the response if status is ok
  */
 const handleFetchErrors = (response = {}) => {
   if (!response.ok) throw Error(response.status)
@@ -17,8 +17,8 @@ const handleFetchErrors = (response = {}) => {
 /**
  * Fetch details for a stock by symbol
  * @method fetchStockDetails
- * @param  {String}          [symbol='']
- * @return {Promise}
+ * @param  {String}          [symbol=''] stock symbol
+ * @return {Promise} async fetch promise
  */
 export const fetchStockDetails = (symbol = '') => (
   fetch(`${IEX_TRADING_BASE_URL}/stock/${symbol}/company`)
@@ -30,8 +30,8 @@ export const fetchStockDetails = (symbol = '') => (
 /**
  * Fetch price for a stock by symbol
  * @method fetchStockDetails
- * @param  {String}          [symbol='']
- * @return {Promise}
+ * @param  {String}          [symbol=''] stock symbol
+ * @return {Promise} async fetch promise
  */
 export const fetchStockPrice = (symbol = '') => (
   fetch(`${IEX_TRADING_BASE_URL}/stock/${symbol}/price`)
@@ -43,8 +43,8 @@ export const fetchStockPrice = (symbol = '') => (
 /**
  * Fetch a list of stocks by list name
  * @method fetchStocksList
- * @param  {String}        [list='']
- * @return {Promise}
+ * @param  {String}        [list=''] stock list name
+ * @return {Promise} async fetch promise
  */
 export const fetchStocksList = (list = '') => (
   fetch(`${IEX_TRADING_BASE_URL}/stock/market/list/${list}`)

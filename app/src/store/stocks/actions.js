@@ -58,9 +58,9 @@ export const requestStocksListFail = list => ({
 /**
  * [shouldFetchStockPrice description]
  * @method shouldFetchStockPrice
- * @param  {Object}              cachedStock
- * @param  {String}              now
- * @return {Boolean}
+ * @param  {Object}              cachedStock stock object to check
+ * @param  {String}              now current timestamp
+ * @return {Boolean} true if should fetch stock price
  */
 const shouldFetchStockPrice = (cachedStock, now) => {
   const CACHE_TIME = 5 * 60 * 1000
@@ -72,17 +72,20 @@ const shouldFetchStockPrice = (cachedStock, now) => {
 /**
  * Thunk Action Creator for getting stock details
  * @method getStockDetails
- * @param  {String}        symbol
- * @return {Dispatch}
+ * @param  {String}        symbol name of the stock symbol for which to get data
+ * @return {Dispatch} dispatches either a fail or success action
  */
 export const getStockDetails = symbol => (
   async (dispatch, getState) => {
     dispatch(requestStock(symbol))
 
     const { stocks: { list } } = getState()
-    const promises = [] // Array of fetches to be done
+    // Array of fetches to be done
+    const promises = []
     const now = new Date().valueOf()
+    // try to find stock in store
     const cachedStock = R.find(R.propEq('symbol', symbol))(list)
+    // try to find details for stock in store
     const cachedStockHasDetails = R.prop('description')(cachedStock)
 
     // Check if the stock already exists in store and return cached details or
@@ -123,8 +126,8 @@ export const getStockDetails = symbol => (
 /**
  * Thunk Action Creator for getting stock list
  * @method getStocksList
- * @param  {String}      list
- * @return {Dispatch}
+ * @param  {String}      list name of the list for which to get data
+ * @return {Dispatch} dispatches either a fail or success action
  */
 export const getStocksList = list => (
   async (dispatch) => {
@@ -137,11 +140,9 @@ export const getStocksList = list => (
       return dispatch(requestStocksListFail(list))
     }
 
-    // Parse the stock objects to contain only specific information and add
-    // update time for price
     const parsedStocksList = stocksList
-      .map(parseStockData)
-      .map(addPriceUpdated)
+      .map(parseStockData) // remove unwanted properties from list items
+      .map(addPriceUpdated) // add priceUpdated timestamps to list items
 
     return dispatch(requestStocksListSuccess(parsedStocksList))
   }

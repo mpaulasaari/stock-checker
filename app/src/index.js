@@ -4,8 +4,10 @@ import { Provider } from 'react-redux'
 
 import store from 'store/store'
 
+// container for the whole application
 import App from 'containers/App'
 
+// common styles
 import 'styles/main.scss'
 
 render(
